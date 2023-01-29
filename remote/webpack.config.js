@@ -7,7 +7,7 @@ const { dependencies } = require("./package.json");
 module.exports = {
     entry: "./src/index",
     mode: "development",
-    devtool : 'inline-source-map',
+    devtool: 'inline-source-map',
     devServer: {
         static: {
             directory: path.join(__dirname, "public"),
@@ -28,7 +28,11 @@ module.exports = {
                     },
                 ],
             },
-        ],
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+              },
+        ]
     },
     plugins: [
         new ModuleFederationPlugin({
@@ -37,6 +41,7 @@ module.exports = {
             exposes: {
                 "./App": "./src/App",
                 "./Button": "./src/Button",
+                "./SearchContainer": "./src/components/search/search.container"
             },
             shared: {
                 ...dependencies,

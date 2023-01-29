@@ -1,17 +1,19 @@
 // host/src/App.js
 import React from "react";
-import ErrorBoundary from "./ErrorBoundary.js";
 const RemoteApp = React.lazy(() => import("Remote/App"));
 const RemoteButton = React.lazy(() => import("Remote/Button"));
+const RemoteSearch = React.lazy(() => import("Remote/SearchContainer"));
+import {ErrorBoundary} from 'react-error-boundary'
+import ErrorHandler from './ErrorHandler'
 
 const RemoteWrapper = ({ children }) => (
   <div
     style={{
       border: "1px solid red",
-      background: "white",
+      padding: "5px"
     }}
   >
-    <ErrorBoundary>{children}</ErrorBoundary>
+    <ErrorBoundary FallbackComponent={ErrorHandler}>{children}</ErrorBoundary>
   </div>
 );
 
@@ -25,6 +27,11 @@ export const App = () => (
     <h2>Remote Button:</h2>
     <RemoteWrapper>
       <RemoteButton />
+    </RemoteWrapper>
+    <br />
+    <h2>Remote Search:</h2>
+    <RemoteWrapper>
+      <RemoteSearch />
     </RemoteWrapper>
     <br />
     <a href="http://localhost:4000">Link to Remote App</a>
